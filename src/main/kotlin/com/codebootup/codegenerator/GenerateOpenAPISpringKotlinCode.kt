@@ -1,4 +1,3 @@
 package com.codebootup.codegenerator
 
-class GenerateOpenAPISpringKotlinCode {
-}
+class GenerateOpenAPISpringKotlinCode

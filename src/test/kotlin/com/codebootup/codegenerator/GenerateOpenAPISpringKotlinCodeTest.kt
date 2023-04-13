@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 
 class GenerateOpenAPISpringKotlinCodeTest {
     @Test
-    fun test(){
+    fun test() {
         GenerateOpenAPISpringKotlinCode()
     }
 }
