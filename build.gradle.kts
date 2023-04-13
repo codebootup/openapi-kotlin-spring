@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-group = "com.codebootup"
+group = "com.codebootup.code-generator"
 version = (project.properties["buildVersion"] ?: "1.0.0-SNAPSHOT")
 
 dependencies {
