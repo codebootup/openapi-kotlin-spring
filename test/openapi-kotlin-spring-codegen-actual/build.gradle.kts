@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id("com.codebootup.kotlin") version "1.0.1"
     id("org.jetbrains.dokka") version "1.8.10"
@@ -14,3 +16,6 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+val bootJar : BootJar by tasks
+bootJar.enabled = false
