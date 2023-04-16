@@ -21,12 +21,12 @@ class KotlinSpringOperationsBuilderTest {
                         type = "Vehicle",
                         typePackage = "com.codebootup.vehicle",
                         required = true,
-                        collection = "List"
+                        collection = "List",
                     ),
-                    pathVariables = listOf()
-                )
+                    pathVariables = listOf(),
+                ),
             ),
-            actual = operationList
+            actual = operationList,
         )
     }
 }

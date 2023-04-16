@@ -22,45 +22,45 @@ class KotlinSpringSchemaObjectBuilderTest {
             properties = listOf(
                 Property(
                     originalFieldName = "brand",
-                    type = ModelType(type = "String", typePackage = "kotlin", required = true)
-                )
-            )
+                    type = ModelType(type = "String", typePackage = "kotlin", required = true),
+                ),
+            ),
         )
         val vehicleDataInterface = DataInterface(
             classname = "Vehicle",
             properties = listOf(
                 Property(
                     originalFieldName = "id",
-                    type = ModelType(type = "Int", typePackage = "kotlin", required = true)
+                    type = ModelType(type = "Int", typePackage = "kotlin", required = true),
                 ),
                 Property(
                     originalFieldName = "model",
-                    type = ModelType(type = "String", typePackage = "kotlin", required = true)
-                )
+                    type = ModelType(type = "String", typePackage = "kotlin", required = true),
+                ),
             ),
             discriminator = "type",
             subTypes = listOf(
-                DataInterfaceSubType(classname = "Car", discriminatorValue = "car")
-            )
+                DataInterfaceSubType(classname = "Car", discriminatorValue = "car"),
+            ),
         )
         val dataSubClass = DataSubClass(
             classname = "Car",
             properties = listOf(
                 Property(
                     originalFieldName = "wheels",
-                    type = ModelType(type = "Wheels", typePackage = "com.codebootup.vehicle", required = true)
-                )
+                    type = ModelType(type = "Wheels", typePackage = "com.codebootup.vehicle", required = true),
+                ),
             ),
-            dataInterface = vehicleDataInterface
+            dataInterface = vehicleDataInterface,
         )
 
         assertEquals(
             expected = listOf(
                 dataClass,
                 vehicleDataInterface,
-                dataSubClass
+                dataSubClass,
             ),
-            actual = operationList
+            actual = operationList,
         )
     }
 }
