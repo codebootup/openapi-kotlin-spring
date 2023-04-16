@@ -1,0 +1,8 @@
+package [(${root.apiPackage})].model
+
+import com.fasterxml.jackson.annotation.JsonProperty
+[# th:each="import : ${itemInFocus.dataImports}"]import [(${import})]
+[/]
+data class [(${itemInFocus.classname})](
+[# th:each="property : ${itemInFocus.properties}"]    @get:JsonProperty("[(${property.originalFieldName})]", required = [(${property.type.required})]) val [(${property.camelCaseFieldName})]: [(${property.type.fullTypeDefinition})],
+[/])

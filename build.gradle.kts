@@ -19,6 +19,10 @@ version = (project.properties["buildVersion"] ?: "1.0.0-SNAPSHOT")
 
 dependencies {
     implementation("com.codebootup.code-generator:code-generator:1.0.0")
+    implementation("org.thymeleaf:thymeleaf:3.1.1.RELEASE")
+    implementation("org.openapi4j:openapi-parser:1.0.7")
+    implementation("org.apache.commons:commons-text:1.10.0")
+    testImplementation("com.codebootup.compare-directories:compare-directories:1.0.0")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {

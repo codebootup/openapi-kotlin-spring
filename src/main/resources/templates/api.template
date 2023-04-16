@@ -1,0 +1,16 @@
+package [(${itemInFocus.apiPackage})]
+[# th:each="import : ${itemInFocus.apiImports}"]
+import [(${import})][/]
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+
+@RequestMapping("[(${itemInFocus.apiBasePath})]")
+interface [(${itemInFocus.apiClassname})] {[# th:each="getOperation : ${itemInFocus.getOperations}"]
+
+    @RequestMapping(
+        method = [RequestMethod.GET],
+        value = ["[(${getOperation.path})]"],
+        produces = ["application/json"]
+    )
+    fun [[(${getOperation.functionName})]]([# th:each="pathVariable,iterStat : ${getOperation.pathVariables}"]@PathVariable("[(${pathVariable.originalFieldName})]") [(${pathVariable.camelCaseFieldName})]: [(${pathVariable.type.type})][(${iterStat.last}? '' : ', ')][/]): [# th:utext="${getOperation.responseType.fullTypeDefinition}" /]
+[/]}

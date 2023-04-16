@@ -9,3 +9,6 @@
  */
 
 rootProject.name = "openapi-kotlin-spring"
+
+include("test:openapi-kotlin-spring-codegen-actual")
+include("test:openapi-kotlin-spring-codegen-expected")

@@ -1,0 +1,58 @@
+openapi: "3.0.0"
+info:
+  title: Vehicle API
+  description: Vehicle API
+  version: "1"
+security: []
+servers:
+  - url: /api/v1
+paths:
+  /vehicles:
+    get:
+      operationId: get-vehicles
+      summary: List all vehicles
+      responses:
+        '200':
+          description: A paged array of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+        '404':
+          description: Not Found
+
+components:
+  schemas:
+    Vehicle:
+      type: object
+      required:
+        - id
+        - model
+      properties:
+        id:
+          type: integer
+        model:
+          type: string
+      discriminator:
+        propertyName: type
+        mapping:
+          car: "#/components/schemas/Car"
+    Car:
+      type: object
+      required:
+        - wheels
+      properties:
+        wheels:
+          oneOf:
+            - $ref: "#/components/schemas/Wheels"
+      allOf:
+        - $ref: "#/components/schemas/Vehicle"
+    Wheels:
+      type: object
+      required:
+        - brand
+      properties:
+        brand:
+          type: string

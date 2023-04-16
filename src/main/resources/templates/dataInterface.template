@@ -1,0 +1,13 @@
+package [(${root.apiPackage})].model
+
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+[# th:each="import : ${itemInFocus.dataImports}"]import [(${import})]
+[/]
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "[(${itemInFocus.discriminator})]", visible = true)
+@JsonSubTypes(
+[# th:each="subtype : ${itemInFocus.subtypes}"]    JsonSubTypes.Type(value = [(${subtype.classname})]::class, name = "[(${subtype.discriminatorValue})]"),
+[/])
+interface [(${itemInFocus.classname})] {
+[# th:each="property : ${itemInFocus.properties}"]    val [(${property.camelCaseFieldName})]: [(${property.type.fullTypeDefinition})]
+[/]}
