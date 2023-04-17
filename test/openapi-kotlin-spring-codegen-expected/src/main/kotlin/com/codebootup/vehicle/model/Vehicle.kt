@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes(
     JsonSubTypes.Type(value = Car::class, name = "car"),
+    JsonSubTypes.Type(value = Plane::class, name = "plane"),
 )
 interface Vehicle {
     val id: Int

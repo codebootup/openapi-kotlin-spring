@@ -98,6 +98,7 @@ components:
         propertyName: type
         mapping:
           car: "#/components/schemas/Car"
+          plane: "#/components/schemas/Plane"
     Car:
       type: object
       required:
@@ -115,6 +116,27 @@ components:
           format: float
       allOf:
         - $ref: "#/components/schemas/Vehicle"
+    Plane:
+      type: object
+      required:
+        - number_of_engines
+        - plane_type
+        - mileage
+      properties:
+        number_of_engines:
+          type: integer
+        airline_name:
+          type: string
+        wheels:
+          oneOf:
+            - $ref: "#/components/schemas/Wheels"
+        plane_type:
+          $ref: "#/components/schemas/PlaneType"
+        mileage:
+          type: number
+          format: double
+      allOf:
+        - $ref: "#/components/schemas/Vehicle"
     Wheels:
       type: object
       required:
@@ -122,5 +144,8 @@ components:
       properties:
         brand:
           type: string
+    PlaneType:
+      type: string
+      enum: [Prop, Jet]
     Location:
       type: string
