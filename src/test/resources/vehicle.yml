@@ -41,6 +41,26 @@ paths:
                   $ref: "#/components/schemas/Vehicle"
         '400':
           description: Bad Request
+  /vehicles/{id}:
+    get:
+      operationId: get-vehicle-by-id
+      summary: Info for a specific vehicle
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The id of vehicle to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        '404':
+          description: Vehicle of id not found
 
 components:
   schemas:
