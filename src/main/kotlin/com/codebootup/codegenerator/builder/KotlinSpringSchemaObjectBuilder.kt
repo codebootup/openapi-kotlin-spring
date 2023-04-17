@@ -5,7 +5,10 @@ import com.codebootup.codegenerator.CommonMappers.Companion.mapType
 import com.codebootup.codegenerator.model.DataClass
 import com.codebootup.codegenerator.model.DataInterface
 import com.codebootup.codegenerator.model.DataInterfaceSubType
+import com.codebootup.codegenerator.model.DataPrimitiveClass
 import com.codebootup.codegenerator.model.DataSubClass
+import com.codebootup.codegenerator.model.EnumClass
+import com.codebootup.codegenerator.model.EnumValue
 import com.codebootup.codegenerator.model.ModelType
 import com.codebootup.codegenerator.model.Property
 import com.codebootup.codegenerator.model.SchemaObject
@@ -20,7 +23,9 @@ class KotlinSpringSchemaObjectBuilder(
         val dataInterfaces = dataInterfaces(inputModel)
         return dataClasses(inputModel) +
             dataInterfaces +
-            dataSubClasses(inputModel, dataInterfaces)
+            dataSubClasses(inputModel, dataInterfaces) +
+            enumClasses(inputModel) +
+            dataPrimitiveClasses(inputModel)
     }
 
     private fun dataClasses(inputModel: OpenApi3): List<SchemaObject> {
@@ -59,7 +64,7 @@ class KotlinSpringSchemaObjectBuilder(
             }
     }
 
-    private fun dataSubClasses(inputModel: OpenApi3, dataInterfaces: List<DataInterface>): List<SchemaObject> {
+    private fun dataSubClasses(inputModel: OpenApi3, dataInterfaces: List<DataInterface>): List<DataSubClass> {
         return inputModel.components.schemas.entries
             .asSequence()
             .filter { it.value != null }
@@ -76,6 +81,38 @@ class KotlinSpringSchemaObjectBuilder(
                 )
             }
             .toList()
+    }
+
+    private fun enumClasses(inputModel: OpenApi3): List<EnumClass> {
+        return inputModel.components.schemas.entries
+            .filter { it.value != null }
+            .filter { it.value.enums?.isNotEmpty() ?: false }
+            .map {
+                EnumClass(
+                    classname = it.key,
+                    type = mapType(type = it.value.type, required = true).type,
+                    values = it.value.enums.map { e ->
+                        EnumValue(
+                            originalEnumValue = e.toString(),
+                        )
+                    },
+                )
+            }
+    }
+
+    private fun dataPrimitiveClasses(inputModel: OpenApi3): List<DataPrimitiveClass> {
+        return inputModel.components.schemas.entries
+            .asSequence()
+            .filter { it.value != null }
+            .filter { it.value.type != "object" }
+            .filter { it.value.enums?.isEmpty() ?: true }
+            .map {
+                DataPrimitiveClass(
+                    classname = it.key,
+                    underlyingType = mapType(type = it.value.type, format = it.value.format, required = true),
+                    typePackage = modelPackage,
+                )
+            }.toList()
     }
 
     private fun findDataInterface(

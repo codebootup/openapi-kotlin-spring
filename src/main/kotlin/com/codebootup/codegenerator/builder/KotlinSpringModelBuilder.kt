@@ -2,7 +2,9 @@ package com.codebootup.codegenerator.builder
 
 import com.codebootup.codegenerator.model.DataClass
 import com.codebootup.codegenerator.model.DataInterface
+import com.codebootup.codegenerator.model.DataPrimitiveClass
 import com.codebootup.codegenerator.model.DataSubClass
+import com.codebootup.codegenerator.model.EnumClass
 import com.codebootup.codegenerator.model.GetOperation
 import com.codebootup.codegenerator.model.KotlinSpringModel
 import com.codebootup.codegenerator.model.PostOperation
@@ -20,6 +22,8 @@ class KotlinSpringModelBuilder(
         val dataClasses = schemaObjects.filterIsInstance<DataClass>()
         val dataInterfaces = schemaObjects.filterIsInstance<DataInterface>()
         val dataSubClasses = schemaObjects.filterIsInstance<DataSubClass>()
+        val enumClasses = schemaObjects.filterIsInstance<EnumClass>()
+        val dataPrimitiveClasses = schemaObjects.filterIsInstance<DataPrimitiveClass>()
 
         val operations = kotlinSpringOperationsBuilder.build(inputModel)
         val getOperations = operations.filterIsInstance<GetOperation>()
@@ -32,6 +36,8 @@ class KotlinSpringModelBuilder(
             dataClasses = dataClasses,
             dataInterfaces = dataInterfaces,
             dataSubClasses = dataSubClasses,
+            enumClasses = enumClasses,
+            dataPrimitiveClasses = dataPrimitiveClasses,
             getOperations = getOperations,
             postOperations = postOperations,
         )

@@ -3,7 +3,7 @@ info:
   title: Vehicle API
   description: Vehicle API
   version: "1"
-security: []
+security: [ ]
 servers:
   - url: /api/v1
 paths:
@@ -69,11 +69,31 @@ components:
       required:
         - id
         - model
+        - name
+        - mileage
+        - registration_number
+        - manufactured_date
+        - purchased_time
       properties:
         id:
           type: integer
         model:
           type: string
+        name:
+          type: string
+        can_fly:
+          type: boolean
+        mileage:
+          type: number
+        registration_number:
+          type: integer
+          format: int64
+        manufactured_date:
+          type: string
+          format: date
+        purchased_time:
+          type: string
+          format: date-time
       discriminator:
         propertyName: type
         mapping:
@@ -82,10 +102,17 @@ components:
       type: object
       required:
         - wheels
+        - location
+        - mileage
       properties:
         wheels:
           oneOf:
             - $ref: "#/components/schemas/Wheels"
+        location:
+          $ref: "#/components/schemas/Location"
+        mileage:
+          type: number
+          format: float
       allOf:
         - $ref: "#/components/schemas/Vehicle"
     Wheels:
@@ -95,3 +122,5 @@ components:
       properties:
         brand:
           type: string
+    Location:
+      type: string

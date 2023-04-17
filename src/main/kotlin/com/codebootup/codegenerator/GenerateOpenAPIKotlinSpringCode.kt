@@ -5,7 +5,9 @@ import com.codebootup.codegenerator.builder.ModelInputOutputBuilder
 import com.codebootup.codegenerator.builder.OpenApiInputModelBuilder
 import com.codebootup.codegenerator.model.DataClass
 import com.codebootup.codegenerator.model.DataInterface
+import com.codebootup.codegenerator.model.DataPrimitiveClass
 import com.codebootup.codegenerator.model.DataSubClass
+import com.codebootup.codegenerator.model.EnumClass
 import com.codebootup.codegenerator.model.KotlinSpringModel
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.templatemode.TemplateMode
@@ -83,6 +85,28 @@ class GenerateOpenAPIKotlinSpringCode(
                         suffix = KOTLIN_SUFFIX,
                     ),
                     modelPathInFocus = KotlinSpringModel::dataSubClasses.name,
+                    location = TemplateLocation(baseDirectory = sourceDirectory, fileDirectory = modelPackageDirectory),
+                ),
+            )
+            .addTemplate(
+                TemplateRenderContext(
+                    template = "enumClass",
+                    fileNamingStrategy = ItemInFocusFileNamingStrategy(
+                        pathExpression = EnumClass::classname.name,
+                        suffix = KOTLIN_SUFFIX,
+                    ),
+                    modelPathInFocus = KotlinSpringModel::enumClasses.name,
+                    location = TemplateLocation(baseDirectory = sourceDirectory, fileDirectory = modelPackageDirectory),
+                ),
+            )
+            .addTemplate(
+                TemplateRenderContext(
+                    template = "dataPrimitiveClass",
+                    fileNamingStrategy = ItemInFocusFileNamingStrategy(
+                        pathExpression = DataPrimitiveClass::classname.name,
+                        suffix = KOTLIN_SUFFIX,
+                    ),
+                    modelPathInFocus = KotlinSpringModel::dataPrimitiveClasses.name,
                     location = TemplateLocation(baseDirectory = sourceDirectory, fileDirectory = modelPackageDirectory),
                 ),
             )

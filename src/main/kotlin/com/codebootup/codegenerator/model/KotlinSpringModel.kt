@@ -7,6 +7,8 @@ data class KotlinSpringModel(
     val dataClasses: List<DataClass>,
     val dataInterfaces: List<DataInterface>,
     val dataSubClasses: List<DataSubClass>,
+    val enumClasses: List<EnumClass>,
+    val dataPrimitiveClasses: List<DataPrimitiveClass>,
     val getOperations: List<GetOperation>,
     val postOperations: List<PostOperation>,
 ) {

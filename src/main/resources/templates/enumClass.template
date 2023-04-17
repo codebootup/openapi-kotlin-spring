@@ -1,0 +1,9 @@
+package [(${root.apiPackage})].model
+
+import com.fasterxml.jackson.annotation.JsonProperty
+
+enum class [(${itemInFocus.classname})] {[# th:each="enumValue : ${itemInFocus.values}"]
+
+    @JsonProperty("[(${enumValue.originalEnumValue})]")
+    [(${enumValue.camelCaseEnumValue})],[/]
+}
