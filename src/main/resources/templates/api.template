@@ -13,4 +13,11 @@ interface [(${itemInFocus.apiClassname})] {[# th:each="getOperation : ${itemInFo
         produces = ["application/json"]
     )
     fun [[(${getOperation.functionName})]]([# th:each="pathVariable,iterStat : ${getOperation.pathVariables}"]@PathVariable("[(${pathVariable.originalFieldName})]") [(${pathVariable.camelCaseFieldName})]: [(${pathVariable.type.type})][(${iterStat.last}? '' : ', ')][/]): [# th:utext="${getOperation.responseType.fullTypeDefinition}" /]
+[/][# th:each="postOperation : ${itemInFocus.postOperations}"]
+    @RequestMapping(
+        method = [RequestMethod.POST],
+        value = ["[(${postOperation.path})]"],
+        produces = ["application/json"]
+    )
+    fun [[(${postOperation.functionName})]](@RequestBody(required = [(${postOperation.requestBody.type.required})]) [(${postOperation.requestBody.camelCaseFieldName})]: [(${postOperation.requestBody.type.fullTypeDefinition})][# th:each="pathVariable,iterStat : ${postOperation.pathVariables}"][(${iterStat.first}? ', ' : '')]@PathVariable("[(${pathVariable.originalFieldName})]") [(${pathVariable.camelCaseFieldName})]: [(${pathVariable.type.type})][(${iterStat.last}? '' : ', ')][/]): [# th:utext="${postOperation.responseType.fullTypeDefinition}" /]
 [/]}
