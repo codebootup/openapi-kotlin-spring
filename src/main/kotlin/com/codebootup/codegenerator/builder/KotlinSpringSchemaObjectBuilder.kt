@@ -52,7 +52,7 @@ class KotlinSpringSchemaObjectBuilder(
             .map {
                 DataInterface(
                     classname = it.key,
-                    properties = properties(it.value),
+                    properties = properties(it.value).filter { p -> p.originalFieldName != it.value.discriminator.propertyName },
                     discriminator = it.value.discriminator.propertyName,
                     subTypes = it.value.discriminator.mapping.entries.map { m ->
                         DataInterfaceSubType(

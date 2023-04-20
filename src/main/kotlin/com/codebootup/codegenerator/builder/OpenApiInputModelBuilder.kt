@@ -6,6 +6,6 @@ import java.io.File
 
 class OpenApiInputModelBuilder(private val spec: File) {
     fun build(): OpenApi3 {
-        return OpenApi3Parser().parse(spec, false)
+        return OpenApi3Parser().parse(spec, true)
     }
 }

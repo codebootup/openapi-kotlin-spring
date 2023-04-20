@@ -74,7 +74,10 @@ components:
         - registration_number
         - manufactured_date
         - purchased_time
+        - type
       properties:
+        type:
+          type: string
         id:
           type: integer
         model:
