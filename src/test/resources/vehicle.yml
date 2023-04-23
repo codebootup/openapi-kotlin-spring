@@ -25,6 +25,8 @@ paths:
     post:
       operationId: post-vehicles
       summary: Add a vehicle
+      security:
+        - BasicAuth: []
       requestBody:
         content:
           application/json:
@@ -41,6 +43,8 @@ paths:
                   $ref: "#/components/schemas/Vehicle"
         '400':
           description: Bad Request
+        '401':
+          description: Unauthorized
   /vehicles/{id}:
     get:
       operationId: get-vehicle-by-id
@@ -63,6 +67,10 @@ paths:
           description: Vehicle of id not found
 
 components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
   schemas:
     Vehicle:
       type: object
