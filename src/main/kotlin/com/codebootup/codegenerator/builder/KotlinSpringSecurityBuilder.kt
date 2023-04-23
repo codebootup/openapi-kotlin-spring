@@ -1,12 +1,13 @@
 package com.codebootup.codegenerator.builder
 
 import com.codebootup.codegenerator.model.SecuredEndpoint
+import com.codebootup.codegenerator.model.SecuredEndpoints
 import com.codebootup.codegenerator.model.SecurityScheme
 import org.openapi4j.parser.model.v3.OpenApi3
 import org.openapi4j.parser.model.v3.SecurityRequirement
 
 class KotlinSpringSecurityBuilder {
-    fun build(inputModel: OpenApi3): List<SecuredEndpoint> {
+    fun build(inputModel: OpenApi3): List<SecuredEndpoints> {
         val securitySchemes = inputModel.components.securitySchemes.entries
         val basePath = inputModel.servers.first().url
 
@@ -39,14 +40,18 @@ class KotlinSpringSecurityBuilder {
                     val matchedSecurityScheme = securitySchemes.firstOrNull { ss -> ss.key == req.key }?.value
                         ?: throw RuntimeException("Unable to find security scheme in open api docs")
 
-                    SecuredEndpoint(
+                    SecurityScheme.valueOf(matchedSecurityScheme.scheme) to SecuredEndpoint(
                         method = it.method,
                         path = it.path,
-                        scheme = SecurityScheme.valueOf(
-                            matchedSecurityScheme.scheme.lowercase().replaceFirstChar { fc -> fc.uppercase() },
-                        ),
                     )
                 }
+            }
+            .groupBy({ it.first }) { it.second }
+            .map { (scheme, endpoints) ->
+                SecuredEndpoints(
+                    scheme = scheme,
+                    endpoints = endpoints,
+                )
             }
     }
 }

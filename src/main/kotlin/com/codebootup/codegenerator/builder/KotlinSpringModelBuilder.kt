@@ -8,7 +8,7 @@ import com.codebootup.codegenerator.model.EnumClass
 import com.codebootup.codegenerator.model.GetOperation
 import com.codebootup.codegenerator.model.KotlinSpringModel
 import com.codebootup.codegenerator.model.PostOperation
-import com.codebootup.codegenerator.model.SecuredEndpoint
+import com.codebootup.codegenerator.model.SecuredEndpoints
 import org.openapi4j.parser.model.v3.OpenApi3
 
 class KotlinSpringModelBuilder(
@@ -32,7 +32,7 @@ class KotlinSpringModelBuilder(
         val postOperations = operations.filterIsInstance<PostOperation>()
 
         val springSecurity = kotlinSpringSecurityBuilder.build(inputModel)
-        val securedEndpoints = springSecurity.filterIsInstance<SecuredEndpoint>()
+        val securedEndpoints = springSecurity.filterIsInstance<SecuredEndpoints>()
 
         return KotlinSpringModel(
             apiClassname = inputModel.info.title.replace("\\s".toRegex(), ""),

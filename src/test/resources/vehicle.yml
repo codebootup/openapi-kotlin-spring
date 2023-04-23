@@ -70,7 +70,7 @@ components:
   securitySchemes:
     BasicAuth:
       type: http
-      scheme: basic
+      scheme: Basic
   schemas:
     Vehicle:
       type: object

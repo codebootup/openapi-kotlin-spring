@@ -13,13 +13,15 @@ open class SecurityConfig {
 
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain? {
-        http.authorizeHttpRequests()
-            [# th:each="securedEndpoint : ${itemInFocus.securedEndpoints}"].requestMatchers(HttpMethod.[(${securedEndpoint.method})], "[(${securedEndpoint.path})]").authenticated()[/]
-            .anyRequest().permitAll()
+        http.csrf().disable()
+            [# th:each="schemeAndEndpoints : ${itemInFocus.securedEndpoints}"].[(${schemeAndEndpoints.scheme.springMethod})]()
             .and()
-            .httpBasic()
+            .authorizeHttpRequests()
+            [# th:each="pathAndMethod : ${schemeAndEndpoints.endpoints}"].requestMatchers(HttpMethod.[(${pathAndMethod.method})], "[(${pathAndMethod.path})]")
+            [/].authenticated()[/]
             .and()
-            .csrf().disable()
+            .authorizeHttpRequests().anyRequest()
+            .permitAll()
         return http.build()
     }
 }

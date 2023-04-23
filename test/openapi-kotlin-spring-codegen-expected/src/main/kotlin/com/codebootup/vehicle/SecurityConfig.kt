@@ -13,13 +13,15 @@ open class SecurityConfig {
 
     @Bean
     open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain? {
-        http.authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/api/v1/vehicles").authenticated()
-            .anyRequest().permitAll()
-            .and()
+        http.csrf().disable()
             .httpBasic()
             .and()
-            .csrf().disable()
+            .authorizeHttpRequests()
+            .requestMatchers(HttpMethod.POST, "/api/v1/vehicles")
+            .authenticated()
+            .and()
+            .authorizeHttpRequests().anyRequest()
+            .permitAll()
         return http.build()
     }
 }
