@@ -1,0 +1,27 @@
+package [(${itemInFocus.apiPackage})]
+
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.SecurityFilterChain
+
+@Configuration
+@EnableWebSecurity
+open class SecurityConfig {
+
+    @Bean
+    open fun securityFilterChain(http: HttpSecurity): SecurityFilterChain? {
+        http.csrf().disable()
+            [# th:each="schemeAndEndpoints : ${itemInFocus.securedEndpoints}"].[(${schemeAndEndpoints.scheme.springMethod})]()
+            .and()
+            .authorizeHttpRequests()
+            [# th:each="pathAndMethod : ${schemeAndEndpoints.endpoints}"].requestMatchers(HttpMethod.[(${pathAndMethod.method})], "[(${pathAndMethod.path})]")
+            [/].authenticated()[/]
+            .and()
+            .authorizeHttpRequests().anyRequest()
+            .permitAll()
+        return http.build()
+    }
+}

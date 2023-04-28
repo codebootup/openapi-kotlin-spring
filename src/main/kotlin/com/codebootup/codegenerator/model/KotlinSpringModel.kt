@@ -11,6 +11,7 @@ data class KotlinSpringModel(
     val dataPrimitiveClasses: List<DataPrimitiveClass>,
     val getOperations: List<GetOperation>,
     val postOperations: List<PostOperation>,
+    val securedEndpoints: List<SecuredEndpoints>,
 ) {
     @Suppress("unused")
     val apiImports: List<String> = (

@@ -110,6 +110,13 @@ class GenerateOpenAPIKotlinSpringCode(
                     location = TemplateLocation(baseDirectory = sourceDirectory, fileDirectory = modelPackageDirectory),
                 ),
             )
+            .addTemplate(
+                TemplateRenderContext(
+                    template = "securityConfig",
+                    fileNamingStrategy = SimpleFileNamingStrategy(filename = "SecurityConfig.kt"),
+                    location = TemplateLocation(baseDirectory = sourceDirectory, fileDirectory = apiPackageDirectory),
+                ),
+            )
     }
 
     private fun templateResolver(): ITemplateResolver {

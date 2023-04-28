@@ -8,6 +8,7 @@ import com.codebootup.codegenerator.model.EnumClass
 import com.codebootup.codegenerator.model.GetOperation
 import com.codebootup.codegenerator.model.KotlinSpringModel
 import com.codebootup.codegenerator.model.PostOperation
+import com.codebootup.codegenerator.model.SecuredEndpoints
 import org.openapi4j.parser.model.v3.OpenApi3
 
 class KotlinSpringModelBuilder(
@@ -16,6 +17,7 @@ class KotlinSpringModelBuilder(
     private val modelPackage = "$apiPackage.model"
     private val springKotlinSchemaObjectBuilder = KotlinSpringSchemaObjectBuilder(modelPackage)
     private val kotlinSpringOperationsBuilder = KotlinSpringOperationsBuilder(modelPackage)
+    private val kotlinSpringSecurityBuilder = KotlinSpringSecurityBuilder()
 
     fun build(inputModel: OpenApi3): KotlinSpringModel {
         val schemaObjects = springKotlinSchemaObjectBuilder.build(inputModel)
@@ -29,6 +31,9 @@ class KotlinSpringModelBuilder(
         val getOperations = operations.filterIsInstance<GetOperation>()
         val postOperations = operations.filterIsInstance<PostOperation>()
 
+        val springSecurity = kotlinSpringSecurityBuilder.build(inputModel)
+        val securedEndpoints = springSecurity.filterIsInstance<SecuredEndpoints>()
+
         return KotlinSpringModel(
             apiClassname = inputModel.info.title.replace("\\s".toRegex(), ""),
             apiPackage = apiPackage,
@@ -40,6 +45,7 @@ class KotlinSpringModelBuilder(
             dataPrimitiveClasses = dataPrimitiveClasses,
             getOperations = getOperations,
             postOperations = postOperations,
+            securedEndpoints = securedEndpoints,
         )
     }
 }
