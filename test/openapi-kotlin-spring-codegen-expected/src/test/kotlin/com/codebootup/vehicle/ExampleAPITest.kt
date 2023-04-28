@@ -11,8 +11,17 @@ import org.springframework.http.HttpMethod
 import org.springframework.web.client.RestTemplate
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@Disabled
 class ExampleAPITest {
+
+    @Test
+    fun `Can get list of examples no auth`(){
+        RestTemplate().exchange(
+            "http://localhost:8080/api/v1/examples",
+            HttpMethod.GET,
+            HttpEntity.EMPTY,
+            object : ParameterizedTypeReference<List<ExampleDataInterface>>(){}
+        )
+    }
     @Test
     fun `Can get list of examples`(){
         val headers = HttpHeaders()
