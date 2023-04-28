@@ -10,8 +10,8 @@ class GenerateOpenAPIKotlinSpringCodeTest {
     private val expectedDirectory = Path.of("test/openapi-kotlin-spring-codegen-expected/src/main/kotlin")
 
     @Test
-    fun `can create vehicle api`() {
-        generateCode("vehicle")
+    fun `can create api`() {
+        generateCode("api")
     }
 
     private fun generateCode(spec: String) {
