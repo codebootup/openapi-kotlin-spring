@@ -1,7 +1,11 @@
-package com.codebootup.vehicle
+package com.codebootup.api
 
-import com.codebootup.api.ExampleAPI
-import com.codebootup.api.model.*
+import com.codebootup.api.model.ExampleDataClass
+import com.codebootup.api.model.ExampleDataInterface
+import com.codebootup.api.model.ExampleDataSubClass1
+import com.codebootup.api.model.ExampleDataSubClass2
+import com.codebootup.api.model.ExampleEnum
+import com.codebootup.api.model.ExamplePrimitiveClass
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -9,7 +13,7 @@ import java.time.LocalDateTime
 @RestController
 class ExampleAPIImpl : ExampleAPI {
 
-    private val map : MutableMap<Int, ExampleDataInterface> = mutableMapOf(
+    private val map: MutableMap<Int, ExampleDataInterface> = mutableMapOf(
         Pair(
             1, ExampleDataSubClass1(
                 location = ExamplePrimitiveClass("examplePrimative"),
