@@ -1,0 +1,148 @@
+openapi: "3.0.0"
+info:
+  title: Example API
+  description: API Description
+  version: "1"
+security: [ ]
+servers:
+  - url: /api/v1
+paths:
+  /examples:
+    get:
+      operationId: example-get
+      summary: List all
+      responses:
+        '200':
+          description: A list of all the objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExampleDataInterface"
+        '404':
+          description: Not Found
+    post:
+      operationId: example-post
+      summary: Post object
+      security:
+        - BasicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExampleDataInterface"
+      responses:
+        '200':
+          description: A paged array of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExampleDataInterface"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+  /example/{id}:
+    get:
+      operationId: example-get-by-id
+      summary: Get specific object
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: The id of object
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleDataInterface"
+        '404':
+          description: object not found
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: Basic
+  schemas:
+    ExampleDataInterface:
+      type: object
+      required:
+        - id
+        - exampleString
+        - exampleInteger
+        - exampleBoolean
+        - exampleNumber
+        - exampleInteger64
+        - exampleDate
+        - exampleDateTime
+        - subType
+      properties:
+        subType:
+          type: string
+        id:
+          type: integer
+        exampleString:
+          type: string
+        exampleBoolean:
+          type: boolean
+        exampleNumber:
+          type: number
+        exampleInteger:
+          type: integer
+        exampleInteger64:
+          type: integer
+          format: int64
+        exampleDate:
+          type: string
+          format: date
+        exampleDateTime:
+          type: string
+          format: date-time
+      discriminator:
+        propertyName: subType
+        mapping:
+          subClass1: "#/components/schemas/ExampleDataSubClass1"
+          subClass2: "#/components/schemas/ExampleDataSubClass2"
+    ExampleDataSubClass1:
+      type: object
+      required:
+        - exampleComplexType
+        - primitiveClass
+        - mileage
+      properties:
+        exampleDataClass:
+          oneOf:
+            - $ref: "#/components/schemas/ExampleDataClass"
+        location:
+          $ref: "#/components/schemas/ExamplePrimitiveClass"
+      allOf:
+        - $ref: "#/components/schemas/ExampleDataInterface"
+    ExampleDataSubClass2:
+      type: object
+      required:
+        - exampleEnum
+      properties:
+        exampleEnum:
+          $ref: "#/components/schemas/ExampleEnum"
+      allOf:
+        - $ref: "#/components/schemas/ExampleDataInterface"
+    ExampleDataClass:
+      type: object
+      required:
+        - exampleString
+      properties:
+        exampleString:
+          type: string
+    ExampleEnum:
+      type: string
+      enum: [EnumValue1, EnumValue2]
+    ExamplePrimitiveClass:
+      type: string

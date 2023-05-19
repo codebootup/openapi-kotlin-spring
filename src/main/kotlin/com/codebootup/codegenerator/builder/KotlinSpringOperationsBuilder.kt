@@ -100,7 +100,7 @@ class KotlinSpringOperationsBuilder(
         val refType = getRefType(requestSchema)
 
         return Property(
-            originalFieldName = refType,
+            originalFieldName = refType.replaceFirstChar { refType[0].lowercase() },
             type = ModelType(
                 type = refType,
                 typePackage = modelPackage,

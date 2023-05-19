@@ -1,4 +1,4 @@
-package com.codebootup.vehicle
+package com.codebootup.api
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -17,7 +17,7 @@ open class SecurityConfig {
             .httpBasic()
             .and()
             .authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/api/v1/vehicles")
+            .requestMatchers(HttpMethod.POST, "/api/v1/examples")
             .authenticated()
             .and()
             .authorizeHttpRequests().anyRequest()
